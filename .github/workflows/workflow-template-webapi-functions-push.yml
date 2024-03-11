@@ -12,10 +12,16 @@ on:
             api_project_folder_path:
                 required: true
                 type: string
+            aure_webapp_name:
+                required: true
+                type: string
             functions_project_filename:
                 required: true
                 type: string
             functions_project_folder_path:
+                required: true
+                type: string
+            aure_functionapp_name:
                 required: true
                 type: string
         secrets:
@@ -24,13 +30,13 @@ on:
             AZURE_FUNCTION_APPS_PUBLISH_PROFILE_TOKEN:
                 required: true
 env:
-  AZURE_WEBAPP_NAME: WebApi20240307182110
-  AZURE_WEBAPP_PACKAGE_PATH: WebApi\published
+  #AZURE_WEBAPP_NAME: WebApi20240307182110
+  AZURE_WEBAPP_PACKAGE_PATH: ${{ inputs.api_project_folder_path }}\published
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 8.0.x
   #WEBAPI_DIRECTORY: WebApi
-  AZURE_FUNCTIONAPP_NAME: FunctionAppCICD20240307173031
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: FunctionAppCICD\published
+  #AZURE_FUNCTIONAPP_NAME: FunctionAppCICD20240307173031
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: ${{ inputs.functions_project_folder_path }}\published
   #FUNCTION_APP_DIRECTORY: FunctionAppCICD
   #DOTNET_CORE_VERSION_INPROC: 8.0.x
 
