@@ -2,7 +2,7 @@ name: Build and deploy .NET Core application to Function App FunctionAppCICD2024
 on:
   push:
     branches:
-    - master
+    - master-temp
 env:
   AZURE_FUNCTIONAPP_NAME: FunctionAppCICD20240307173031
   AZURE_FUNCTIONAPP_PACKAGE_PATH: FunctionAppCICD\published
