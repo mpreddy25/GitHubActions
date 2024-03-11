@@ -2,7 +2,7 @@ name: Build and deploy .NET Core application to Web App WebApi20240307182110
 on:
   push:
     branches:
-    - master
+    - master-temp
 
 jobs:
   call-reusable-workflow:
