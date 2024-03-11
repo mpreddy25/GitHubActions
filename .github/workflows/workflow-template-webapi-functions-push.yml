@@ -87,7 +87,7 @@ jobs:
         - name: Deploy to Azure Function App
           uses: Azure/functions-action@v1
           with:
-            app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+            app-name: ${{ inputs.aure_functionapp_name }}
             publish-profile: ${{ secrets.AZURE_FUNCTION_APPS_PUBLISH_PROFILE_TOKEN }}
             package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
 
@@ -103,6 +103,6 @@ jobs:
         - name: Deploy to Azure WebApp
           uses: azure/webapps-deploy@v2
           with:
-            app-name: ${{ env.AZURE_WEBAPP_NAME }}
+            app-name: ${{ inputs.aure_webapp_name }}
             publish-profile: ${{ secrets.AZURE_WEB_APPS_PUBLISH_PROFILE_TOKEN }}
             package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
