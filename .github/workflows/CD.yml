@@ -11,7 +11,7 @@ jobs:
         solution_path: GitHubActions
         api_project_filename: WebApi.csproj
         api_project_folder_path: WebApi
-        aure_webapp_name: webapi20240307182110/testing
+        aure_webapp_name: 'webapi20240307182110(testing)'
         functions_project_filename: FunctionAppCICD.csproj
         functions_project_folder_path: FunctionAppCICD
         aure_functionapp_name: FunctionAppCICD20240307173031
