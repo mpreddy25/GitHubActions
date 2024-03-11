@@ -4,13 +4,19 @@ on:
     workflow_call:
         inputs:
             solution_path:
-                required: false
+                required: true
                 type: string
-            project_filename:
-                required: false
+            api_project_filename:
+                required: true
                 type: string
-            project_folder_path:
-                required: false
+            api_project_folder_path:
+                required: true
+                type: string
+            functions_project_filename:
+                required: true
+                type: string
+            functions_project_folder_path:
+                required: true
                 type: string
         secrets:
             AZURE_WEB_APPS_PUBLISH_PROFILE_TOKEN:
@@ -22,11 +28,11 @@ env:
   AZURE_WEBAPP_PACKAGE_PATH: WebApi\published
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 8.0.x
-  WEBAPI_DIRECTORY: WebApi
+  #WEBAPI_DIRECTORY: WebApi
   AZURE_FUNCTIONAPP_NAME: FunctionAppCICD20240307173031
   AZURE_FUNCTIONAPP_PACKAGE_PATH: FunctionAppCICD\published
-  FUNCTION_APP_DIRECTORY: FunctionAppCICD
-  DOTNET_CORE_VERSION_INPROC: 8.0.x
+  #FUNCTION_APP_DIRECTORY: FunctionAppCICD
+  #DOTNET_CORE_VERSION_INPROC: 8.0.x
 
 jobs:
     build:
@@ -38,13 +44,13 @@ jobs:
           with:
             dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
         - name: Restore
-          run: dotnet restore "${{ env.WEBAPI_DIRECTORY }}"
+          run: dotnet restore "${{ inputs.api_project_folder_path }}"
         - name: Build
-          run: dotnet build "${{ env.WEBAPI_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
+          run: dotnet build "${{ inputs.api_project_folder_path }}" --configuration ${{ env.CONFIGURATION }} --no-restore
         - name: Test
-          run: dotnet test "${{ env.WEBAPI_DIRECTORY }}" --no-build
+          run: dotnet test "${{ inputs.api_project_folder_path }}" --no-build
         - name: Publish
-          run: dotnet publish "${{ env.WEBAPI_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
+          run: dotnet publish "${{ inputs.api_project_folder_path }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
         - name: Publish Artifacts
           uses: actions/upload-artifact@v3
           with:
@@ -52,11 +58,11 @@ jobs:
             path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
     
         - name: Restore
-          run: dotnet restore "${{ env.FUNCTION_APP_DIRECTORY }}"
+          run: dotnet restore "${{ inputs.functions_project_folder_path }}"
         - name: Build
-          run: dotnet build "${{ env.FUNCTION_APP_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
+          run: dotnet build "${{ inputs.functions_project_folder_path }}" --configuration ${{ env.CONFIGURATION }} --no-restore
         - name: Publish
-          run: dotnet publish "${{ env.FUNCTION_APP_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}"
+          run: dotnet publish "${{ inputs.functions_project_folder_path }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}"
         - name: Publish Artifacts
           uses: actions/upload-artifact@v3
           with:
