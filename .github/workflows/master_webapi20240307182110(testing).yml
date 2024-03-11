@@ -6,7 +6,7 @@ name: Build and deploy ASP.Net Core app to Azure Web App - webapi20240307182110
 on:
   push:
     branches:
-      - master
+      - master-temp
   workflow_dispatch:
 
 jobs:
