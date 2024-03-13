@@ -11,11 +11,7 @@ jobs:
         solution_path: GitHubActions
         api_project_filename: WebApi.csproj
         api_project_folder_path: WebApi
-        aure_webapp_name: 'webapi20240307182110'
-        aure_webapp_slot_name: 'testing'
-        functions_project_filename: FunctionAppCICD.csproj
-        functions_project_folder_path: FunctionAppCICD
-        aure_functionapp_name: FunctionAppCICD20240307173031
+        aure_webapp_name: 'webapicicd'
+        aure_webapp_slot_name: 'staging'
     secrets:
         AZURE_WEB_APPS_PUBLISH_PROFILE_TOKEN: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-        AZURE_FUNCTION_APPS_PUBLISH_PROFILE_TOKEN: ${{ secrets.FunctionAppCICD20240307173031_EF35 }}
