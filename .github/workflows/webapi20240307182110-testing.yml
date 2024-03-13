@@ -2,7 +2,7 @@ name: Build and deploy .NET Core application to Web App webapi20240307182110
 on:
   push:
     branches:
-    - master
+    - master-temp
 env:
   AZURE_WEBAPP_NAME: webapi20240307182110
   AZURE_WEBAPP_PACKAGE_PATH: WebApi\published

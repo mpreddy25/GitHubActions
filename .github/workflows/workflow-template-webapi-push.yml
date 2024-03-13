@@ -18,30 +18,13 @@ on:
             aure_webapp_slot_name:
                 required: true
                 type: string
-            functions_project_filename:
-                required: true
-                type: string
-            functions_project_folder_path:
-                required: true
-                type: string
-            aure_functionapp_name:
-                required: true
-                type: string
         secrets:
             AZURE_WEB_APPS_PUBLISH_PROFILE_TOKEN:
                 required: true
-            AZURE_FUNCTION_APPS_PUBLISH_PROFILE_TOKEN:
-                required: true
 env:
-  #AZURE_WEBAPP_NAME: WebApi20240307182110
   AZURE_WEBAPP_PACKAGE_PATH: ${{ inputs.api_project_folder_path }}\published
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 8.0.x
-  #WEBAPI_DIRECTORY: WebApi
-  #AZURE_FUNCTIONAPP_NAME: FunctionAppCICD20240307173031
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: ${{ inputs.functions_project_folder_path }}\published
-  #FUNCTION_APP_DIRECTORY: FunctionAppCICD
-  #DOTNET_CORE_VERSION_INPROC: 8.0.x
 
 jobs:
     build:
@@ -66,34 +49,6 @@ jobs:
             name: webapp
             path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
     
-        - name: Restore
-          run: dotnet restore "${{ inputs.functions_project_folder_path }}"
-        - name: Build
-          run: dotnet build "${{ inputs.functions_project_folder_path }}" --configuration ${{ env.CONFIGURATION }} --no-restore
-        - name: Publish
-          run: dotnet publish "${{ inputs.functions_project_folder_path }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}"
-        - name: Publish Artifacts
-          uses: actions/upload-artifact@v3
-          with:
-            name: functionapp
-            path: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
-
-    deploy-function-app:
-        runs-on: windows-latest
-        needs: build
-        steps:
-        - name: Download artifact from build job
-          uses: actions/download-artifact@v3
-          with:
-            name: functionapp
-            path: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
-        - name: Deploy to Azure Function App
-          uses: Azure/functions-action@v1
-          with:
-            app-name: ${{ inputs.aure_functionapp_name }}
-            publish-profile: ${{ secrets.AZURE_FUNCTION_APPS_PUBLISH_PROFILE_TOKEN }}
-            package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
-
     deploy-webapp:
         runs-on: windows-latest
         needs: build

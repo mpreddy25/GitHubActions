@@ -2,16 +2,17 @@ name: Build and deploy .NET Core application to Web App WebApi20240307182110
 on:
   push:
     branches:
-    - master-temp
+    - master
 
 jobs:
   call-reusable-workflow:
-    uses: mpreddy25/GitHubActions/.github/workflows/workflow-template-webapi-functions-push.yml@master
+    uses: mpreddy25/GitHubActions/.github/workflows/workflow-template-webapi-push.yml@master
     with:
         solution_path: GitHubActions
         api_project_filename: WebApi.csproj
         api_project_folder_path: WebApi
-        aure_webapp_name: 'webapi20240307182110(testing)'
+        aure_webapp_name: 'webapi20240307182110'
+        aure_webapp_slot_name: 'testing'
         functions_project_filename: FunctionAppCICD.csproj
         functions_project_folder_path: FunctionAppCICD
         aure_functionapp_name: FunctionAppCICD20240307173031
