@@ -77,6 +77,6 @@ jobs:
           with:
             app-name: ${{ inputs.aure_webapp_name }}
             resource-group: 'mpreddytesting'
-            slot1: 'testing'
+            slot1: 'staging'
             slot2: 'production'
             publish-profile: ${{ secrets.AZURE_WEB_APPS_PUBLISH_PROFILE_TOKEN }}
