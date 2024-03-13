@@ -15,3 +15,18 @@ jobs:
         aure_webapp_slot_name: 'staging'
     secrets:
         AZURE_WEB_APPS_PUBLISH_PROFILE_TOKEN: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+
+  swap-webapp-slots:
+        needs: call-reusable-workflow
+        runs-on: windows-latest
+        if: github.event_name == 'workflow_dispatch'
+
+        steps:
+        - name: Swap Slots
+          uses: azure/webapps-swap@v1
+          with:
+            app-name: 'webapicicd'
+            resource-group: 'mpreddytesting'
+            slot1: 'staging'
+            slot2: 'production'
+            publish-profile: ${{ secrets.AZURE_WEB_APPS_PUBLISH_PROFILE_TOKEN }}
